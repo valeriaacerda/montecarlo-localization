@@ -1,0 +1,228 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="warehouse">
+
+    <plugin filename="ignition-gazebo-physics-system"
+            name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-user-commands-system"
+            name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system"
+            name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="ignition-gazebo-sensors-system"
+            name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Suelo -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ==========================================================
+         ALMACÉN 10 x 8 m centrado en (0,0)
+         Paredes: grosor 0.15 m, altura 2.0 m
+         ========================================================== -->
+
+    <!-- Pared Norte (y = +4) -->
+    <model name="wall_north">
+      <static>true</static>
+      <pose>0 4.075 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>10.15 0.15 2.0</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>10.15 0.15 2.0</size></box></geometry>
+          <material><diffuse>0.75 0.75 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Pared Sur (y = -4) -->
+    <model name="wall_south">
+      <static>true</static>
+      <pose>0 -4.075 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>10.15 0.15 2.0</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>10.15 0.15 2.0</size></box></geometry>
+          <material><diffuse>0.75 0.75 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Pared Este (x = +5) -->
+    <model name="wall_east">
+      <static>true</static>
+      <pose>5.075 0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.15 8.15 2.0</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.15 8.15 2.0</size></box></geometry>
+          <material><diffuse>0.75 0.75 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Pared Oeste (x = -5) -->
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-5.075 0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.15 8.15 2.0</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.15 8.15 2.0</size></box></geometry>
+          <material><diffuse>0.75 0.75 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ==========================================================
+         ESTANTES / PALLETS
+         Cada "pallet stack" es una caja 0.8 x 0.6 x 0.8 m
+         Distribuidos en 3 filas de 3 stacks cada una
+         Fila A: x = -3.0  (lado oeste)
+         Fila B: x =  0.0  (centro)
+         Fila C: x = +3.0  (lado este)
+         Posiciones Y: -2.5, 0.0, +2.5
+         Pasillo principal (x=-1.5 a x=1.5) queda libre al centro
+         ========================================================== -->
+
+    <!-- FILA A — x = -3.5 -->
+    <model name="pallet_A1">
+      <static>true</static><pose>-3.5 -2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 0.6 0.8</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.8 0.6 0.8</size></box></geometry>
+          <material><diffuse>0.55 0.35 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pallet_A2">
+      <static>true</static><pose>-3.5 0.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 0.6 0.8</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.8 0.6 0.8</size></box></geometry>
+          <material><diffuse>0.55 0.35 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pallet_A3">
+      <static>true</static><pose>-3.5 2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 0.6 0.8</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.8 0.6 0.8</size></box></geometry>
+          <material><diffuse>0.55 0.35 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- FILA B — x = 0.0 (fila central, pallets más altos para distinguir) -->
+    <model name="pallet_B1">
+      <static>true</static><pose>0.0 -3.0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.7 0.6 1.0</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.7 0.6 1.0</size></box></geometry>
+          <material><diffuse>0.2 0.45 0.65 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pallet_B2">
+      <static>true</static><pose>0.0 3.0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.7 0.6 1.0</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.7 0.6 1.0</size></box></geometry>
+          <material><diffuse>0.2 0.45 0.65 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- FILA C — x = +3.5 -->
+    <model name="pallet_C1">
+      <static>true</static><pose>3.5 -2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 0.6 0.8</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.8 0.6 0.8</size></box></geometry>
+          <material><diffuse>0.55 0.35 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pallet_C2">
+      <static>true</static><pose>3.5 0.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 0.6 0.8</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.8 0.6 0.8</size></box></geometry>
+          <material><diffuse>0.55 0.35 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pallet_C3">
+      <static>true</static><pose>3.5 2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.8 0.6 0.8</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.8 0.6 0.8</size></box></geometry>
+          <material><diffuse>0.55 0.35 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Columna de soporte (pilar) en esquina — rompe simetría -->
+    <model name="pillar_nw">
+      <static>true</static><pose>-4.2 3.2 0.75 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.3 0.3 1.5</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.3 0.3 1.5</size></box></geometry>
+          <material><diffuse>0.4 0.4 0.4 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pillar_se">
+      <static>true</static><pose>4.2 -3.2 0.75 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.3 0.3 1.5</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>0.3 0.3 1.5</size></box></geometry>
+          <material><diffuse>0.4 0.4 0.4 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Robot -->
+    <include>
+      <uri>/home/valeriaacerda/montecarlo-localization/robot/puzzlebot_gz.sdf</uri>
+      <name>puzzlebot</name>
+      <pose>-4.0 0.0 0.05 0 0 0</pose>
+    </include>
+
+  </world>
+</sdf>
