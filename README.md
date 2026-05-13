@@ -19,7 +19,7 @@ iterativamente hasta converger en la pose real del robot.
 
 ## Video de demostración
 
-📹 **[Ver video](./video/mcl_demo.mp4)**
+[![Demo MCL](https://img.youtube.com/vi/k30oxK0Cy_0/0.jpg)](https://www.youtube.com/watch?v=k30oxK0Cy_0)
 
 El video muestra:
 1. El mapa conocido del almacén (`warehouse_map.png`)
